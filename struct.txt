@@ -1,0 +1,79 @@
+Shadow the Hedgehog .CCL File Structure
+
+===Section 1: Header;
+    0x0: int; file size.
+    0x4; int; length of data sections 2 and 3
+    0x8; int; almost always 4, but in SECRETDOOR.CCL (the largest cmn .CCL file), is 8. Possibly because 0x4 is larger than FF?
+    0xC; int; unknown. Always 1?
+    0x10; int; unknown. null?
+    0x14; "00003142"
+    0x18; int; unknown. null?
+    0x1C; int; unknown. null?
+
+===Section 2: Shapes Array; (starts at 0x20)
+    0x0; int; Collision Shape
+        0: Sphere 
+        1: Cube
+        2: Cylinder
+        3: Capsule
+        4: Plane?
+    0x4; int; sect 3 address relative to Section 2. (in other words, file address -0x20)
+    0x8; byte: unknown
+    0x9: byte: unknown
+    0xA: byte: unknown
+    0xB; byte: Collision type
+        00: Intangible
+        01: Floor (can grab)
+        02: Wall (can wallcling)
+        03: Floor? 
+        06: Damage
+    0xC; int?: unknown
+
+Repeat the above for each seperate collision.
+Then 0x10 00's padding.
+
+===Section 3: Dimensions Array;
+s
+=Sphere=     Size : 0x10
+    0x0; float; x position
+    0x4; float; y position
+    0x8; float; z position
+    0xC; float; size
+
+=Cube=        Size : 0x28
+
+=Cylinder=    Size : 0x24
+
+=Capsule=    Size : 0x24 
+    0x00; X pos?
+    0x04; Y pos
+    0x08; Z pos?
+    0x0C; height scale
+    0x10; width scale
+    0x14; Angle? Always (pi/2)
+    0x18; ?
+    0x1C; ?
+    0x20; ?
+
+=Plane?=    Size : 0x28
+    0x00; X pos
+    0x04; Y pos
+    0x08; Z pos
+    0x0C; Y scale?
+    0x10; Z scale?
+    0x14; X scale?
+    0x18; Angle? Always (pi/2)
+    0x1C; Y Rotation?
+    0x20; Z Rotation?
+    0x24; X Rotation?
+
+
+===Section 4: Unknown 41 Section; 
+SAME AS(?) SPLINE SECTION 5.
+Difference in exact byte numbers though;
+instead starts with 41, and additional bytes are 44.
+
+===Section 5: File Path
+Fills out the remainder of file size.
+Presumed safe to ignore otherwise.
+In-game tests seem to confirm as much.
